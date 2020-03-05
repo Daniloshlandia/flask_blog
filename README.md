@@ -1,4 +1,4 @@
-Chapter 9 - Creating Asynchronous Tasks with Celery
+Creating Asynchronous Tasks with Celery
 ===================================================
 
 
