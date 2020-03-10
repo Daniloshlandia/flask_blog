@@ -70,7 +70,7 @@ def digest(self):
     msg = MIMEText(render_template("digest.html", posts=posts), 'html')
 
     msg['Subject'] = "Weekly Digest"
-    msg['From'] = ""
+    msg['From'] = "Dash the reporter"
 
     try:
         smtp_server = smtplib.SMTP(current_app.config['SMTP_SERVER'])
