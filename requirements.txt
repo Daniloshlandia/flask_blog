@@ -68,3 +68,6 @@ wrapt==1.11.2
 WTForms==2.2.1
 zipp==3.1.0
 flower
+flask-debugtoolbar
+Flask-Caching
+redis

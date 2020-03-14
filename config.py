@@ -15,17 +15,6 @@ class Config(object):
     FACEBOOK_CLIENT_ID = "XXX"
     FACEBOOK_CLIENT_SECRET = "XXXX"
 
-
-class ProdConfig(Config):
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'database.db')
-
-
-class DevConfig(Config):
-    DEBUG = True
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'database.db')
-
     CELERY_BROKER_URL = "amqp://rabbitmq:rabbitmq@localhost//"
     CELERY_RESULT_BACKEND = "amqp://rabbitmq:rabbitmq@localhost//"
 
@@ -34,9 +23,30 @@ class DevConfig(Config):
     SMTP_PASSWORD = "danilo505a"
     SMTP_FROM = "from@flask.com"
 
+
     CELERYBEAT_SCHEDULE = {
         'weekly-digest': {
             'task': 'blog.tasks.digest',
             'schedule': crontab(day_of_week=6, hour='10')
         },
     }
+
+
+class ProdConfig(Config):
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'database.db')
+
+    CACHE_TYPE = 'redis'
+    CACHE_REDIS_HOST = 'localhost'
+    CACHE_REDIS_PORT = '6379'
+    CACHE_REDIS_PASSWORD = ''
+    CACHE_REDIS_DB = '0'
+
+
+class DevConfig(Config):
+    DEBUG = True
+    CACHE_TYPE = 'null'
+    DEBUG_TB_INTERCEPT_REDIRECTS = False
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_RECORD_QUERIES = True
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'database.db')

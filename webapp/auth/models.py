@@ -1,5 +1,5 @@
 from . import bcrypt, AnonymousUserMixin
-from .. import db
+from .. import db, cache
 
 roles = db.Table(
     'role_users',
@@ -27,6 +27,13 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
+
+    @cache.memoize(60)
+    def has_role(self, name):
+        for role in self.roles:
+            if role.name == name:
+                return True
+        return False
 
     def has_role(self, name):
         for role in self.roles:

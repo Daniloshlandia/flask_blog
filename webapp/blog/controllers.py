@@ -6,6 +6,7 @@ from .models import db, Post, Tag, Comment, tags
 from .forms import CommentForm, PostForm
 from ..auth.models import User
 from ..auth import has_role
+from .. import cache
 
 blog_blueprint = Blueprint(
     'blog',
@@ -14,7 +15,7 @@ blog_blueprint = Blueprint(
     url_prefix="/blog"
 )
 
-
+@cache.cached(timeout=7200, key_prefix='sidebar_data')
 def sidebar_data():
     recent = Post.query.order_by(Post.publish_date.desc()).limit(5).all()
     top_tags = db.session.query(
@@ -26,6 +27,7 @@ def sidebar_data():
 
 @blog_blueprint.route('/')
 @blog_blueprint.route('/<int:page>')
+@cache.cached(timeout=60)
 def home(page=1):
     posts = Post.query.order_by(Post.publish_date.desc()).paginate(page,
                                                                    current_app.config.get('POSTS_PER_PAGE', 10),
