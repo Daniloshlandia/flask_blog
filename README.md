@@ -1,4 +1,4 @@
-Creating Asynchronous Tasks with Celery
+
 ===================================================
 
 
