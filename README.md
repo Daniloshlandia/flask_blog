@@ -1,5 +1,4 @@
-Chapter 10 - Useful Flask Extensions
-====================================
+==================================
 
 
 To run the application
