@@ -2,7 +2,7 @@ import functools
 from flask import flash, redirect, url_for, session, abort
 from flask_login import current_user
 from flask_openid import OpenID
-from flask_dance.contrib.twitter import make_twitter_blueprint,  twitter
+from flask_dance.contrib.twitter import make_twitter_blueprint, twitter
 from flask_dance.contrib.facebook import make_facebook_blueprint, facebook
 from flask_dance.consumer import oauth_authorized
 from flask_login import LoginManager, login_user
@@ -14,6 +14,7 @@ from flask_jwt_extended import JWTManager
 class BlogAnonymous(AnonymousUserMixin):
     def __init__(self):
         self.username = 'Guest'
+
 
 bcrypt = Bcrypt()
 oid = OpenID()
@@ -71,7 +72,9 @@ def has_role(name):
                 return f(*args, **kwargs)
             else:
                 abort(403)
+
         return functools.update_wrapper(wraps, f)
+
     return real_decorator
 
 

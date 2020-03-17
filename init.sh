@@ -29,5 +29,6 @@ flask db upgrade
 echo --------------------
 echo Generating test data
 echo --------------------
-source venv/bin/activate; python test_data.py
+flask test-data
+
 

@@ -18,11 +18,13 @@ class Config(object):
     CELERY_BROKER_URL = "amqp://rabbitmq:rabbitmq@localhost//"
     CELERY_RESULT_BACKEND = "amqp://rabbitmq:rabbitmq@localhost//"
 
+    MAIL_SERVER = "smtp.gmail.com"
+    MAIL_PORT = 465
+    MAIL_USE_SSL=True
     SMTP_SERVER = "smtp.gmail.com"
-    SMTP_USER = "danilosh45@gmail.com"
-    SMTP_PASSWORD = "danilo505a"
+    SMTP_USER = "someemail@gmail.com"
+    SMTP_PASSWORD = "password"
     SMTP_FROM = "from@flask.com"
-
 
     CELERYBEAT_SCHEDULE = {
         'weekly-digest': {
@@ -45,8 +47,8 @@ class ProdConfig(Config):
 
 class DevConfig(Config):
     DEBUG = True
-    CACHE_TYPE = 'null'
     DEBUG_TB_INTERCEPT_REDIRECTS = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_RECORD_QUERIES = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'database.db')
+
+    CACHE_TYPE = 'simple'

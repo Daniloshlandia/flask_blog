@@ -35,12 +35,6 @@ class User(db.Model):
                 return True
         return False
 
-    def has_role(self, name):
-        for role in self.roles:
-            if role.name == name:
-                return True
-        return False
-
     def set_password(self, password):
         self.password = bcrypt.generate_password_hash(password)
 

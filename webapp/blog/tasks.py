@@ -1,11 +1,13 @@
-import smtplib
 import datetime
-from flask import current_app
-from email.mime.text import MIMEText
+import logging
 from flask import render_template
-
-from .. import celery
+from flask_mail import Message
+from .. import celery, mail
 from .models import Reminder, Post
+
+logging.basicConfig(format='%(asctime)s:%(levelname)s:%(name)s:%(message)s')
+logging.getLogger().setLevel(logging.DEBUG)
+logs = logging.getLogger(__name__)
 
 
 @celery.task()
@@ -25,20 +27,15 @@ def multiply(x, y):
     max_retries=5
 )
 def remind(self, pk):
+    logs.info("Remind worker %d" % pk)
     reminder = Reminder.query.get(pk)
-    msg = MIMEText(reminder.text)
-
-    msg['Subject'] = "Your reminder"
-    msg['From'] = ""
-    msg['To'] = reminder.email
+    msg = Message(body="Text %s" % str(reminder.text), recipients=[reminder.email], subject="Your reminder")
     try:
-        smtp_server = smtplib.SMTP(current_app.config['SMTP_SERVER'])
-        smtp_server.starttls()
-        smtp_server.login(current_app.config['SMTP_USER'], current_app.config['SMTP_PASSWORD'])
-        smtp_server.sendmail("", [reminder.email], msg.as_string())
-        smtp_server.close()
+        mail.send(msg)
+        logs.info("Email sent to %s" % reminder.email)
         return
     except Exception as e:
+        logs.error(e)
         self.retry(exc=e)
 
 
@@ -67,20 +64,16 @@ def digest(self):
     if (len(posts) == 0):
         return
 
-    msg = MIMEText(render_template("digest.html", posts=posts), 'html')
+    msg = Message()
+    msg.html = render_template("digest.html", posts=posts)
+    msg.recipients = ['']
 
-    msg['Subject'] = "Weekly Digest"
-    msg['From'] = "Dash the reporter"
-
+    msg.subject = "Weekly Digest"
     try:
-        smtp_server = smtplib.SMTP(current_app.config['SMTP_SERVER'])
-        smtp_server.starttls()
-        smtp_server.login(current_app.config['SMTP_USER'], current_app.config['SMTP_PASSWORD'])
-        smtp_server.sendmail("", [""], msg.as_string())
-        smtp_server.close()
-
+        mail.send(msg)
         return
     except Exception as e:
+        logs.error(e)
         self.retry(exc=e)
 
 
