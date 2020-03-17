@@ -2,7 +2,10 @@ if [ ! -d "venv" ]; then
     echo --------------------
     echo Creating virtualenv
     echo --------------------
+# add path for u virtualenv if use pyenv 
     virtualenv venv
+
+
 fi
 source venv/bin/activate
 
@@ -15,6 +18,7 @@ if [ ! -d "migrations" ]; then
     echo --------------------
     export FLASK_APP=main.py; flask db init
 fi
+#migration for SQLite maybe work with postgrest and Mysql i don't know
 echo --------------------
 echo Generate migration DDL code
 echo --------------------
@@ -29,6 +33,7 @@ flask db upgrade
 echo --------------------
 echo Generating test data
 echo --------------------
+#data test bey pydata extesion flask 
 flask test-data
 
 
