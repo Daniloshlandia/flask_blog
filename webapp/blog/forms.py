@@ -16,4 +16,5 @@ class PostForm(Form):
         DataRequired(),
         Length(max=255)
     ])
+    youtube_id = StringField('Youtube video id', [Length(max=255)])
     text = TextAreaField('Content', [DataRequired()])

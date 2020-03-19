@@ -72,6 +72,7 @@ def new_post():
     form = PostForm()
     if form.validate_on_submit():
         new_post = Post()
+        new_post.youtube_id = form.youtube_id.data
         new_post.title = form.title.data
         new_post.user_id = current_user.id
         new_post.text = form.text.data
@@ -90,6 +91,7 @@ def edit_post(id):
     if current_user.id == post.user.id:
         form = PostForm()
         if form.validate_on_submit():
+            post.youtube_id = form.youtube_id.data
             post.title = form.title.data
             post.text = form.text.data
             post.publish_date = datetime.datetime.now()
@@ -97,6 +99,7 @@ def edit_post(id):
             db.session.commit()
             return redirect(url_for('.post', post_id=post.id))
         form.title.data = post.title
+        form.youtube_id.data = post.youtube_id
         form.text.data = post.text
         return render_template('edit.html', form=form, post=post)
     abort(403)

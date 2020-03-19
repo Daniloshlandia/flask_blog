@@ -18,6 +18,13 @@
             </p>
         </div>
     </div>
+    {% if post.youtube_id %}
+    <div class="row">
+      <div class="col">
+        {{ youtube(post.youtube_id) | safe }}
+      </div>
+    </div>
+    {% endif %}
     <div class="row">
         <div class="col">
             {{ post.text | safe }}

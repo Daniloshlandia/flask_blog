@@ -72,7 +72,7 @@ def generate_users():
             continue
         user = User()
         poster = Role.query.filter_by(name=item['role']).one()
-        user.roles.append(poster)
+        user.roles.append(poster, admin)
         user.username = item['username']
         user.password = bcrypt.generate_password_hash("password")
         users.append(user)

@@ -9,8 +9,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 from flask_assets import Environment, Bundle
 from flask_babel import Babel, _
 #creating own extension youtube temporal debugging
-from flask import Blueprint, render_template, Markup
-
+from flask_youtube import Youtube
 
 logging.basicConfig(format='%(asctime)s:%(levelname)s:%(name)s:%(message)s')
 logging.getLogger().setLevel(logging.DEBUG)
@@ -23,6 +22,7 @@ debug_toolbar = DebugToolbarExtension()
 cache = Cache()
 assets_env = Environment()
 mail = Mail()
+youtube = Youtube()
 
 main_css = Bundle(
     'css/bootstrap.css',
@@ -38,47 +38,7 @@ main_js = Bundle(
 )
 
 
-"""
-Creating object Youtube function handled parameter of jinja engiene and Render
-HTML to display template.
-"""
-class Youtube(object):
-    def __init__(self, app=None, **kwargs):
-        if app:
-            self.init__app(app)
 
-    def init_app(self, app):
-        self.register_blueprint(app)
-        app.add_template_global(youtube)
-
-    def register_blueprint(self, app):
-        module = Blueprint(
-            "youtube",
-            __name__,
-            url_prefix='youtube',
-            template_folder="templates"
-        )
-        app.register_blueprint(module)
-        return module
-
-class Video(object):
-    def __init__(self, video_id, cls="youtube"):
-        self.video_id = video_id
-        self.cls = cls
-
-        @property
-        def html(self):
-            return Markup(render_template('youtube/video.html', video=self))
-
-    def youtube(*args, **kwargs):
-        video = Video(*args, **kwargs)
-        return video.html
-
-
-youtube = Youtube()
-"""
-end code from own extension debugging
-"""
 def create_app(object_name):
     """
     An flask application factory, as explained here:
