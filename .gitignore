@@ -1,9 +1,10 @@
 *~
 .fuse_hidden*
+*.directory
 .Trash-*
 .nfs*
 .env
-*.venv_flask
+*.venv_mezzanine
 *.pyc
 *.pyo
 __pycache__/
