@@ -83,3 +83,5 @@ WTForms==2.2.1
 zipp==3.1.0
 setuptools
 unittest2
+selenium
+coverage
