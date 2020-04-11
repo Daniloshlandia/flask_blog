@@ -36,7 +36,6 @@ Flask-OpenID==1.2.5
 Flask-RESTful==0.3.8
 Flask-SQLAlchemy==2.3.2
 Flask-WTF==0.14.2
-Flask-Youtube==0.1
 flower==0.9.3
 gevent==1.4.0
 greenlet==0.4.15
@@ -55,6 +54,7 @@ MarkupSafe==1.1.1
 mccabe==0.6.1
 oauthlib==3.1.0
 p==0.0.0
+pkg-resources==0.0.0
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycodestyle==2.5.0
