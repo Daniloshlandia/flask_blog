@@ -8,8 +8,8 @@ from flask_mail import Mail
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_assets import Environment, Bundle
 from flask_babel import Babel, _
-#creating own extension youtube temporal debugging
-from flask_youtube import Youtube
+
+
 
 logging.basicConfig(format='%(asctime)s:%(levelname)s:%(name)s:%(message)s')
 logging.getLogger().setLevel(logging.DEBUG)
@@ -22,7 +22,6 @@ debug_toolbar = DebugToolbarExtension()
 cache = Cache()
 assets_env = Environment()
 mail = Mail()
-youtube = Youtube()
 
 main_css = Bundle(
     'css/bootstrap.css',
@@ -57,9 +56,8 @@ def create_app(object_name):
     cache.init_app(app)
     assets_env.init_app(app)
     mail.init_app(app)
-#core function youtube
-    youtube.init_app(app)
-#core function youtube
+
+
     from .auth import create_module as auth_create_module
     from .blog import create_module as blog_create_module
     from .main import create_module as main_create_module
