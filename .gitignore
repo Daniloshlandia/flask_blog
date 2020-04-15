@@ -4,7 +4,7 @@
 .Trash-*
 .nfs*
 .env
-*.venv_mezzanine
+*.venv_flask
 *.pyc
 *.pyo
 __pycache__/
@@ -25,6 +25,7 @@ celerybeat-schedule.dat
 celerybeat-schedule.dir
 celerybeat.pid
 database.db
+migrations/
 # Coverage reports
 htmlcov/
 .coverage

@@ -1,4 +1,4 @@
-#!/home/dash/src/flask/flask_blog/.venv_flask/bin/python
+#!/home/dash/src/flask_blog/.venv_flask/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
